@@ -1,0 +1,15 @@
+import numpy as np 
+from scipy.integrate import odeint 
+import matplotlib.pyplot as plt 
+def returns_dydt(y,t): 
+    dydt = t*np.exp(3*t)-2*y 
+    return dydt 
+y0 = 1
+t = np.linspace(0,5)  
+y1= (1/5)*t*np.exp(3*t)-(1/25)*t*np.exp(3*t) -(1/5)*t*np.exp(-2*t)
+y = odeint(returns_dydt, y0, t) 
+plt.plot(t,y,color='r', label= 'ode' ) 
+plt.plot(t,y1, color= 'b', label= 'exact') 
+plt.xlabel("Time") 
+plt.ylabel("Y") 
+plt.show()
