@@ -1,18 +1,42 @@
-import numpy as np 
-import scipy.integrate as spi
-import matplotlib.pyplot as plt 
-def returns_dydt(y,t): 
-    dydt = t*np.exp(3*t)-2*y 
-    return dydt 
-t= np.linspace(0,1,100)
-y1= (1/5)*t*np.exp(3*t)-(1/25)*t*np.exp(3*t) -(1/5)*t*np.exp(-2*t)
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.integrate import solve_ivp
+from scipy.optimize import fsolve
 
-t_span= (0,1)
-y0= 0
-sol = spi.solve_ivp(returns_dydt, t_span, [y0] , t_eval=np.linspace(0, 1, 50))
+# Define the Lotka-Volterra system
+def lotka_volterra(t, z):
+    x, y = z
+    dx_dt = -0.1 * x + 0.02 * x * y
+    dy_dt = 0.2 * y - 0.025 * x * y
+    return [dx_dt, dy_dt]
 
-plt.plot(t,y1, color= 'b', label= 'exact') 
-plt.plot(sol.t,sol.y[0],color='y')
-plt.xlabel("Time") 
-plt.ylabel("Y") 
+
+x0 = 6  
+y0 = 6  
+initial_conditions = [x0, y0]
+
+t_span = (0, 100)  
+t_eval= np.linspace(0, 100, 1000)  
+
+
+# Solve the system
+sol = solve_ivp(
+    lotka_volterra,
+    t_span,
+    initial_conditions,
+    t_eval=t_eval,
+    method='RK45',
+    rtol=1e-6,
+    atol=1e-9)
+
+x= sol.y[0]
+y= sol.y[1]
+t= sol.t
+
+plt.plot(t, x, 'r-', label='Predators (x)')
+plt.plot(t, y, 'b-', label='Prey (y)')
+plt.xlabel('Time')
+plt.ylabel('population')
+plt.title('ahfnkafhafka')
+plt.grid()
 plt.show()
