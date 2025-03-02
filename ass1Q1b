@@ -1,0 +1,18 @@
+import numpy as np 
+import scipy.integrate as spi
+import matplotlib.pyplot as plt 
+def returns_dydt(y,t): 
+    dydt = t*np.exp(3*t)-2*y 
+    return dydt 
+t= np.linspace(0,1,100)
+y1= (1/5)*t*np.exp(3*t)-(1/25)*t*np.exp(3*t) -(1/5)*t*np.exp(-2*t)
+
+t_span= (0,1)
+y0= 0
+sol = spi.solve_ivp(returns_dydt, t_span, [y0] , t_eval=np.linspace(0, 1, 50))
+
+plt.plot(t,y1, color= 'b', label= 'exact') 
+plt.plot(sol.t,sol.y[0],color='y')
+plt.xlabel("Time") 
+plt.ylabel("Y") 
+plt.show()
