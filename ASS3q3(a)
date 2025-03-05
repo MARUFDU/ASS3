@@ -1,0 +1,27 @@
+import numpy as np 
+import matplotlib.pyplot as plt
+import scipy.integrate as spi 
+
+def pop(t ,z ):
+    x,y = z
+    dxdt = x*(2-.4*x - .3*y)
+    dydt = y*(1-.1*y - .3*x)
+    return[dxdt,dydt]
+
+x0  = 1.5
+y0 = 3.5
+initial_condition = [x0,y0]
+
+t1 = np.linspace(0,100000,100000)
+t2 = np.linspace(0,100000,100000)
+tspan = (0,100000)
+sol  = spi.solve_ivp(pop, tspan ,initial_condition,t_eval = t1, method= 'RK45')
+
+x = sol.y[0]
+y = sol.y[1]
+t= sol.t
+
+plt.plot(t,x,color = 'g', label = 'population of x')
+plt.plot(t,y,color = 'r', label = 'population of y')
+plt.legend()
+plt.show()
