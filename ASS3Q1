@@ -35,7 +35,9 @@ plt.legend()
 
 
 plt.subplot(3,1,2)
-plt.plot(t1,error_odeivp )
+plt.plot(t1,error_odeivp ,color = 'b', label='Error by odeivp')
+plt.legend()
 plt.subplot(3,1,3)
-plt.plot(t1,error_solveivp )
+plt.plot(t1,error_solveivp,color = 'r', label='Error by solve_ivp' )
+plt.legend()
 plt.show()
